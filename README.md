@@ -23,6 +23,7 @@ You can define a vulnerability policy based on impact i.e. the number of vulnera
 
 ### Github Actions
 
+You need to create a token with read access to Security Alerts and configure it within the Secrets resource of your repository, then:
 In your repository, create a YAML file at: ```.github/workflows/security-gate.yml``` with this content:
 
 ```yaml
@@ -62,7 +63,7 @@ jobs:
 
 ---
 
-### If you want to use local: download and install
+### If you want to use local
 
 ```bash
 # Download
