@@ -30,8 +30,10 @@ sub main {
             my $data = $request -> json();
 
             foreach my $alert (@$data) {
-                my $severity = $alert -> {security_vulnerability} -> {severity};
-                push @severity, $severity;
+                if ($alert -> {"state"} eq "open") {
+                    my $severity = $alert -> {security_vulnerability} -> {severity};
+                    push @severity, $severity;
+                }
             }            
             
             print "[!] Total of security alerts:\n\n";
@@ -60,7 +62,7 @@ sub main {
 
     else {
         print "
-			\rSecurity Gate v0.0.1
+			\rSecurity Gate v0.0.2
 			\rCore Commands
 			\r==============
 			\r\tCommand          Description
