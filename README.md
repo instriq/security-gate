@@ -21,7 +21,48 @@ You can define a vulnerability policy based on impact i.e. the number of vulnera
 
 ---
 
-### Download and install
+### Github Actions
+
+In your repository, create a YAML file at: ```.github/workflows/security-gate.yml``` with this content:
+
+```yaml
+name: Security Gate - Instriq
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MAX_CRITICAL: 1
+      MAX_HIGH: 2
+      MAX_MEDIUM: 3
+      MAX_LOW: 4
+      GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Pull Docker image from GitHub Container Registry
+      run: docker pull ghcr.io/instriq/security-gate/security-gate:latest
+
+    - name: Verify security alerts from dependabot
+      run: |
+        docker run ghcr.io/instriq/security-gate/security-gate:latest \
+        -t $GITHUB_TOKEN \
+        -r ${{ github.repository }} \
+        --critical $MAX_CRITICAL \
+        --high $MAX_HIGH \
+        --medium $MAX_MEDIUM \
+        --low $MAX_LOW
+```
+
+---
+
+### If you want to use local: download and install
 
 ```bash
 # Download
@@ -32,13 +73,18 @@ $ sudo cpanm --installdeps .
 
 # Basic usage
 $ perl security-gate.pl --help
-```
 
----
-
-### Github Actions
-
-```yaml
+Security Gate v0.0.1
+Core Commands
+==============
+	Command          Description
+	-------          -----------
+        -t, --token      GitHub token
+        -r, --repo       GitHub repository
+        -c, --critical   Critical severity limit
+        -h, --high       High severity limit
+        -m, --medium     Medium severity limit
+        -l, --low        Low severity limit 
 ```
 
 ---
@@ -47,7 +93,7 @@ $ perl security-gate.pl --help
 
 ```
 $ docker build -t security-gate .
-$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> -r organization/repository --critical 1 --high 1 --medium 2 --low 4
+$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> -r <organization/repository> --critical 1 --high 2 --medium 3 --low 5
 ```
 
 ---
