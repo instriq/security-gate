@@ -6,7 +6,7 @@
       <img src="https://img.shields.io/badge/license-MIT-blue.svg">
     </a>
      <a href="https://github.com/instriq/security-gate/releases">
-      <img src="https://img.shields.io/badge/version-0.0.1-blue.svg">
+      <img src="https://img.shields.io/badge/version-0.0.2-blue.svg">
     </a>
   </p>
 </p>
@@ -75,7 +75,7 @@ $ sudo cpanm --installdeps .
 # Basic usage
 $ perl security-gate.pl --help
 
-Security Gate v0.0.1
+Security Gate v0.0.2
 Core Commands
 ==============
 	Command          Description
