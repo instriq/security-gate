@@ -8,9 +8,13 @@ use Mojo::JSON;
 use Mojo::UserAgent;
 
 sub main {
-    my ($token, $repository, $critical, $high, $medium, $low);
-    my @severity;
+    my ($token, $repository, @severity);
     my @severities = ("critical", "high", "medium", "low");
+
+    my $critical = 0;
+    my $high     = 0;
+    my $medium   = 0;
+    my $low      = 0;
 
     Getopt::Long::GetOptions (
         "t|token=s"    => \$token,
@@ -18,7 +22,7 @@ sub main {
         "c|critical=i" => \$critical,
         "h|high=i"     => \$high,
         "m|medium=i"   => \$medium,
-        "l|low=i"      => \$low,
+        "l|low=i"      => \$low
     );
 
     if ($token && $repository) {
@@ -34,7 +38,7 @@ sub main {
                     my $severity = $alert -> {security_vulnerability} -> {severity};
                     push @severity, $severity;
                 }
-            }            
+            }
             
             print "[!] Total of security alerts:\n\n";
 
@@ -50,14 +54,15 @@ sub main {
                     "medium"   => $medium,
                     "low"      => $low
                 );
-
+                
                 if (exists $severity_limits{$severity} && $count > $severity_limits{$severity}) {
                     print "\n[+] More than $severity_limits{$severity} $severity security alerts found. Finalizing the process with error.\n";
                     exit 1;
                 }
-
             }
         }
+        
+        return 0;
     }
 
     else {
