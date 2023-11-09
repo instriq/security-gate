@@ -67,7 +67,7 @@ sub main {
 
     else {
         print "
-			\rSecurity Gate v0.0.2
+			\rSecurity Gate v0.0.3
 			\rCore Commands
 			\r==============
 			\r\tCommand          Description
