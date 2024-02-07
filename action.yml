@@ -1,4 +1,4 @@
-name: security-gate
+name: github-security-gate
 description: Simple and pratical security gate for Github Security Alerts
 author: LESIS
 branding:
