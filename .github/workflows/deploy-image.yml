@@ -25,7 +25,7 @@ jobs:
         with:
           registry: docker.pkg.github.com
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.LESIS_DEPLOY }}
 
       - name: Push Docker image to GitHub Container Registry
         run: docker push docker.pkg.github.com/${{ github.repository }}/security-gate:latest
