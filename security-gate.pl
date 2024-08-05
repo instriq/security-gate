@@ -79,6 +79,8 @@ sub main {
             \r\t-m, --medium     Medium severity limit
             \r\t-l, --low        Low severity limit
         \n";
+
+        return; 
     }
 }
 
