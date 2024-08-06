@@ -80,7 +80,7 @@ sub main {
             \r\t-l, --low        Low severity limit
         \n";
 
-        return; 
+        return 1; 
     }
 }
 
