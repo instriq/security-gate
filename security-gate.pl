@@ -87,4 +87,9 @@ sub main {
     }
 }
 
-main();
+if ($ENV{TEST_MODE}) {
+    main();
+} 
+else {
+    exit main();
+}
