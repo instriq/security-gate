@@ -57,12 +57,29 @@ sub main {
 
             print "\n";
 
+            print "Debug: Severity counts: " . join(", ", map {"$_: $severity_counts{$_}"} @severities) . "\n";
+            print "Debug: Severity limits: " . join(", ", map {"$_: $severity_limits{$_}"} @severities) . "\n";
+
+            my $threshold_exceeded = 0;
             foreach my $severity (@severities) {
+                print "Debug: Checking $severity - Count: $severity_counts{$severity}, Limit: $severity_limits{$severity}\n";
                 if ($severity_counts{$severity} > $severity_limits{$severity}) {
-                    print "[+] More than $severity_limits{$severity} $severity security alerts found. Finalizing the process with error.\n";
-                    return 1;
+                    print "[+] More than $severity_limits{$severity} $severity security alerts found.\n";
+                    $threshold_exceeded = 1;
                 }
             }
+
+            print "Debug: Threshold exceeded: $threshold_exceeded\n";
+
+            if ($threshold_exceeded) {
+                print "Finalizing the process with error.\n";
+                return 1;
+            }
+        }
+
+        else {
+            print "Error: Unable to fetch alerts. HTTP status code: " . $request->code() . "\n";
+            return 1;
         }
 
         return 0;
@@ -89,7 +106,8 @@ sub main {
 
 if ($ENV{TEST_MODE}) {
     main();
-} 
+}
+ 
 else {
     exit main();
 }
