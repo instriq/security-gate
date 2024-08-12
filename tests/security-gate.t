@@ -97,4 +97,73 @@ subtest 'Output formatting' => sub {
     );
 };
 
+subtest 'Invalid token or repository' => sub {
+    my $mock_response = Test::MockObject -> new();
+    $mock_response -> set_always('code', 401);
+
+    my $mock_tx = Test::MockObject -> new();
+    $mock_tx -> set_always('result', $mock_response);
+
+    $mock_ua -> set_always('get', $mock_tx);
+
+    local @ARGV = ('-t', 'invalid_token', '-r', 'invalid_repo');
+    is(
+        scalar(main()),
+        1,
+        'Script exits with non-zero code when token or repository is invalid'
+    );
+};
+
+subtest 'Empty response from GitHub API' => sub {
+    my $mock_response = Test::MockObject -> new();
+    $mock_response -> set_always('code', 200);
+    $mock_response -> set_always('json', []);
+
+    my $mock_tx = Test::MockObject -> new();
+    $mock_tx -> set_always('result', $mock_response);
+
+    $mock_ua -> set_always('get', $mock_tx);
+
+    local @ARGV = ('-t', 'test_token', '-r', 'test_repo');
+    is(
+        scalar(main()),
+        0,
+        'Script exits with zero code when no alerts are found'
+    );
+};
+
+subtest 'Multiple severity thresholds' => sub {
+    my $mock_response = Test::MockObject -> new();
+    $mock_response -> set_always('code', 200);
+    $mock_response -> set_always('json', [
+        { state => 'open', security_vulnerability => { severity => 'high' } },
+        { state => 'open', security_vulnerability => { severity => 'critical' } },
+        { state => 'open', security_vulnerability => { severity => 'medium' } },
+    ]);
+
+    my $mock_tx = Test::MockObject -> new();
+    $mock_tx -> set_always('result', $mock_response);
+
+    $mock_ua -> set_always('get', $mock_tx);
+
+    local @ARGV = ('-t', 'test_token', '-r', 'test_repo', '-c', '0', '-h', '0', '-m', '0', '-l', '0');
+
+    my $stdout;
+    {
+        local *STDOUT;
+        open STDOUT, '>', \$stdout;
+        
+        my $result = main();
+        
+        diag("STDOUT: $stdout");
+        diag("Result: $result");
+        
+        is(
+            $result,
+            1,
+            'Script exits with non-zero code when multiple thresholds are exceeded'
+        );
+    }
+};
+
 done_testing();
