@@ -8,7 +8,7 @@ use Test::MockObject;
 use Test::Output;
 use Mojo::JSON qw(encode_json);
 
-$ENV{TEST_MODE} = 1;
+local $ENV{TEST_MODE} = 1;
 
 my $mock_ua = Test::MockObject -> new();
 $mock_ua -> fake_module('Mojo::UserAgent');
