@@ -22,7 +22,7 @@ jobs:
       MAX_HIGH: 0
       MAX_MEDIUM: 0
       MAX_LOW: 0
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.TOKEN }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
