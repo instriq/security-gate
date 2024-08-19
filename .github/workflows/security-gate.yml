@@ -38,4 +38,5 @@ jobs:
         -c "$MAX_CRITICAL" \
         -h "$MAX_HIGH" \
         -m "$MAX_MEDIUM" \
-        -l "$MAX_LOW"
+        -l "$MAX_LOW" \
+        --dependency-alerts
