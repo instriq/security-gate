@@ -3,13 +3,11 @@ package SecurityGate::Engine::Code {
     use warnings;
     use Mojo::UserAgent;
     use Mojo::JSON;
+    use Data::Dumper;
 
     sub new {
       my ($class, $token, $repository, $severity_limits) = @_;
-
-      my $alerts_endpoint   = "https://api.github.com/repos/$repository/code-scanning/alerts";
-      my $analyses_endpoint = "https://api.github.com/repos/$repository/code-scanning/analyses";
-      
+      my $alerts_endpoint   = "https://api.github.com/repos/$repository/code-scanning/alerts";      
       my $userAgent = Mojo::UserAgent -> new();
       my $alerts_request = $userAgent -> get($alerts_endpoint, {Authorization => "Bearer $token"}) -> result();
 
@@ -19,6 +17,8 @@ package SecurityGate::Engine::Code {
         my %severity_counts = map {$_ => 0} keys %$severity_limits;
 
         foreach my $alert (@$alerts_data) {
+          print Dumper($alert);
+
           if ($alert -> {state} eq "open") {
             $open_alerts++;
             
@@ -37,7 +37,7 @@ package SecurityGate::Engine::Code {
         
         foreach my $severity (keys %severity_counts) {
           if ($severity_counts{$severity} > $severity_limits -> {$severity}) {
-            print "[+] More than $severity_limits -> {$severity} $severity code scanning alerts found.\n";
+            print "[+] More than $severity_limits->{$severity} $severity code scanning alerts found.\n";
             
             $threshold_exceeded = 1;
           }
@@ -53,21 +53,7 @@ package SecurityGate::Engine::Code {
         
         return 1;
       }
-
-      my $analyses_request = $userAgent -> get($analyses_endpoint, {Authorization => "Bearer $token"}) -> result();
-
-      if ($analyses_request -> code() == 200) {
-        my $analyses_data = $analyses_request -> json();
-        
-        print "[!] Total of code scanning analyses found: " . scalar(@$analyses_data) . "\n";
-      }
-
-      else {
-        print "Error: Unable to fetch code scanning analyses. HTTP status code: " . $analyses_request -> code() . "\n";
-        
-        return 1;
-      }
-
+      
       return 0;
     }
 }
