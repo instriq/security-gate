@@ -27,7 +27,7 @@ You need to create a token with read access to Security Alerts and configure it 
 In your repository, create a YAML file at: ```.github/workflows/security-gate.yml``` with this content:
 
 ```yaml
-name: Security Gate - Instriq
+name: Security Gate - LESIS
 
 on:
   push:
