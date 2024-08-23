@@ -3,11 +3,11 @@ package SecurityGate::Engine::Code {
     use warnings;
     use Mojo::UserAgent;
     use Mojo::JSON;
-    use Data::Dumper;
 
     sub new {
       my ($class, $token, $repository, $severity_limits) = @_;
       my $alerts_endpoint   = "https://api.github.com/repos/$repository/code-scanning/alerts";      
+      
       my $userAgent = Mojo::UserAgent -> new();
       my $alerts_request = $userAgent -> get($alerts_endpoint, {Authorization => "Bearer $token"}) -> result();
 
@@ -17,8 +17,6 @@ package SecurityGate::Engine::Code {
         my %severity_counts = map {$_ => 0} keys %$severity_limits;
 
         foreach my $alert (@$alerts_data) {
-          print Dumper($alert);
-
           if ($alert -> {state} eq "open") {
             $open_alerts++;
             
@@ -53,7 +51,7 @@ package SecurityGate::Engine::Code {
         
         return 1;
       }
-      
+
       return 0;
     }
 }
