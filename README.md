@@ -87,7 +87,7 @@ Core Commands
         Command                Description
         -------                -----------
         -t, --token            GitHub token
-        -r, --repo             GitHub repository
+        -r, --repo            GitHub repository, organization/repository-name
         -c, --critical         Critical severity limit
         -h, --high             High severity limit
         -m, --medium           Medium severity limit
@@ -103,7 +103,13 @@ Core Commands
 
 ```
 $ docker build -t security-gate .
-$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> -r <organization/repository> --critical 1 --high 2 --medium 3 --low 5 --dependency-alerts --code-alerts --secret-alerts 
+$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> \
+  -r <organization/repository> \
+  --critical 1 \
+  --high 2 \
+  --medium 3 \
+  --low 5 \
+  --dependency-alerts --code-alerts --secret-alerts 
 ```
 
 ---
