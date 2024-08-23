@@ -61,7 +61,10 @@ jobs:
         --critical $MAX_CRITICAL \
         --high $MAX_HIGH \
         --medium $MAX_MEDIUM \
-        --low $MAX_LOW
+        --low $MAX_LOW \
+        --dependency-alerts \
+        --code-alerts \
+        --secret-alerts 
 ```
 
 ---
@@ -89,9 +92,9 @@ Core Commands
         -h, --high             High severity limit
         -m, --medium           Medium severity limit
         -l, --low              Low severity limit
-        --dependency-alerts    Check for dependency alerts
-        --secret-alerts        Check for secret scanning alerts
-        --code-alerts          Check for code scanning alerts
+        --dependency-alerts    Check dependency alerts
+        --secret-alerts        Check secret scanning alerts
+        --code-alerts          Check code scanning alerts
 ```
 
 ---
@@ -100,7 +103,7 @@ Core Commands
 
 ```
 $ docker build -t security-gate .
-$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> -r <organization/repository> --critical 1 --high 2 --medium 3 --low 5
+$ docker run -ti --rm security-gate -t <GITHUB_TOKEN> -r <organization/repository> --critical 1 --high 2 --medium 3 --low 5 --dependency-alerts --code-alerts --secret-alerts 
 ```
 
 ---

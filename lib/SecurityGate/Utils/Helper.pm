@@ -15,9 +15,9 @@ package SecurityGate::Utils::Helper {
                 \r\t-h, --high             High severity limit
                 \r\t-m, --medium           Medium severity limit
                 \r\t-l, --low              Low severity limit
-                \r\t--dependency-alerts    Check for dependency alerts
-                \r\t--secret-alerts        Check for secret scanning alerts
-                \r\t--code-alerts          Check for code scanning alerts\n\n";
+                \r\t--dependency-alerts    Check dependency alerts
+                \r\t--secret-alerts        Check secret scanning alerts
+                \r\t--code-alerts          Check code scanning alerts\n\n";
 	}
 }
 
