@@ -30,9 +30,9 @@ sub main {
         my $result = 0;
 
         my %alert_checks = (
-            'dependency-alerts' => sub { SecurityGate::Engine::Dependencies->new($token, $repository, \%severity_limits) },
-            'secret-alerts'     => sub { SecurityGate::Engine::Secrets->new($token, $repository) },
-            'code-alerts'       => sub { SecurityGate::Engine::CodeScanning->new($token, $repository, \%severity_limits) }
+            'dependency-alerts' => sub { SecurityGate::Engine::Dependencies -> new($token, $repository, \%severity_limits) },
+            'secret-alerts'     => sub { SecurityGate::Engine::Secrets -> new($token, $repository) },
+            'code-alerts'       => sub { SecurityGate::Engine::Code -> new($token, $repository, \%severity_limits) }
         );
 
         for my $alert_type (keys %alert_checks) {
@@ -43,7 +43,7 @@ sub main {
             elsif ($alert_type eq 'secret-alerts' && $secret_alerts) {
                 $result += $alert_checks{$alert_type}->();
             }
-            
+
             elsif ($alert_type eq 'code-alerts' && $code_alerts) {
                 $result += $alert_checks{$alert_type}->();
             }
