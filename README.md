@@ -6,7 +6,7 @@
       <img src="https://img.shields.io/badge/license-MIT-blue.svg">
     </a>
      <a href="https://github.com/instriq/security-gate/releases">
-      <img src="https://img.shields.io/badge/version-0.0.3-blue.svg">
+      <img src="https://img.shields.io/badge/version-0.1.0-blue.svg">
     </a>
   </p>
 </p>
@@ -15,7 +15,7 @@
 
 ### Summary
 
-This is a project that allows you to use a Security Gate within Github, using Actions and your project's Security Alerts as an information base. Currently only Dependabot Alerts are supported, soon we will have support for Secrets and Security Advisories Alerts.
+This is a project that allows you to use a Security Gate within Github, using Actions and your project's Security Alerts as an information base. Currently alerts from DependaBot, Code Scanning and Secret Scanning are supported.
 
 You can define a vulnerability policy based on impact i.e. the number of vulnerabilities per threat, and automatically block your CI/CD pipeline if these policies are not met. This ensures that your application has greater protection, preventing codes that contain known threats from being deployed in production.
 
@@ -27,7 +27,7 @@ You need to create a token with read access to Security Alerts and configure it 
 In your repository, create a YAML file at: ```.github/workflows/security-gate.yml``` with this content:
 
 ```yaml
-name: Security Gate - Instriq
+name: Security Gate - LESIS
 
 on:
   push:
@@ -78,17 +78,20 @@ $ sudo cpanm --installdeps .
 # Basic usage
 $ perl security-gate.pl --help
 
-Security Gate v0.0.3
+Security Gate v0.1.0
 Core Commands
-==============
-	Command          Description
-	-------          -----------
-        -t, --token      GitHub token
-        -r, --repo       GitHub repository
-        -c, --critical   Critical severity limit
-        -h, --high       High severity limit
-        -m, --medium     Medium severity limit
-        -l, --low        Low severity limit 
+====================
+        Command                Description
+        -------                -----------
+        -t, --token            GitHub token
+        -r, --repo             GitHub repository
+        -c, --critical         Critical severity limit
+        -h, --high             High severity limit
+        -m, --medium           Medium severity limit
+        -l, --low              Low severity limit
+        --dependency-alerts    Check for dependency alerts
+        --secret-alerts        Check for secret scanning alerts
+        --code-alerts          Check for code scanning alerts
 ```
 
 ---
