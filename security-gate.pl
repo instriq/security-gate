@@ -12,19 +12,18 @@ use Getopt::Long;
 
 sub main {
   my ($token, $repository, $dependency_alerts, $secret_scanning_alerts, $code_scanning_alerts);
-
   my %severity_limits = map {$_ => 0} @SEVERITIES;
 
   Getopt::Long::GetOptions(
-    "t|token=s" => \$token,
-    "r|repo=s" => \$repository,
-    "c|critical=i" => \$severity_limits{critical},
-    "h|high=i" => \$severity_limits{high},
-    "m|medium=i" => \$severity_limits{medium},
-    "l|low=i" => \$severity_limits{low},
-    "dependency-alerts" => \$dependency_alerts,
+    "t|token=s"              => \$token,
+    "r|repo=s"               => \$repository,
+    "c|critical=i"           => \$severity_limits{critical},
+    "h|high=i"               => \$severity_limits{high},
+    "m|medium=i"             => \$severity_limits{medium},
+    "l|low=i"                => \$severity_limits{low},
+    "dependency-alerts"      => \$dependency_alerts,
     "secret-scanning-alerts" => \$secret_scanning_alerts,
-    "code-scanning-alerts" => \$code_scanning_alerts
+    "code-scanning-alerts"   => \$code_scanning_alerts
   );
 
   if ($token && $repository) {
