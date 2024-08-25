@@ -1,24 +1,27 @@
 package SecurityGate::Utils::Helper {
     use strict;
-	use warnings;
+    use warnings;
 
-	sub new {
-	      return "
-                \rSecurity Gate v0.1.0
-                \rCore Commands
-                \r====================
-                \r\tCommand                Description
-                \r\t-------                -----------
-                \r\t-t, --token            GitHub token
-                \r\t-r, --repo             GitHub repository, organization/repository-name
-                \r\t-c, --critical         Critical severity limit
-                \r\t-h, --high             High severity limit
-                \r\t-m, --medium           Medium severity limit
-                \r\t-l, --low              Low severity limit
-                \r\t--dependency-alerts    Check dependency alerts
-                \r\t--secret-alerts        Check secret scanning alerts
-                \r\t--code-alerts          Check code scanning alerts\n\n";
-	}
+    sub new {
+        return <<"EOT";
+
+Security Gate v0.0.3
+Core Commands
+==============
+Command                         Description
+-------                         -----------
+-t, --token                     GitHub token
+-r, --repo                      GitHub repository
+-c, --critical                  Critical severity limit
+-h, --high                      High severity limit
+-m, --medium                    Medium severity limit
+-l, --low                       Low severity limit
+--dependency-alerts             Check for dependency alerts
+--secret-scanning-alerts        Check for secret scanning alerts
+--code-scanning-alerts          Check for code scanning alerts
+
+EOT
+    }
 }
 
 1;
