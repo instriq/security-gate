@@ -31,7 +31,7 @@ sub main {
 
         my %alert_checks = (
             'dependency-alerts' => sub { SecurityGate::Engine::Dependencies -> new($token, $repository, \%severity_limits) },
-            'secret-alerts'     => sub { SecurityGate::Engine::Secrets -> new($token, $repository) },
+            'secret-alerts'     => sub { SecurityGate::Engine::Secrets -> new($token, $repository, \%severity_limits) },
             'code-alerts'       => sub { SecurityGate::Engine::Code -> new($token, $repository, \%severity_limits) }
         );
 
