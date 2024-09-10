@@ -87,7 +87,7 @@ Core Commands
         Command                Description
         -------                -----------
         -t, --token            GitHub token
-        -r, --repo            GitHub repository, organization/repository-name
+        -r, --repo             GitHub repository, organization/repository-name
         -c, --critical         Critical severity limit
         -h, --high             High severity limit
         -m, --medium           Medium severity limit
