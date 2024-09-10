@@ -30,23 +30,13 @@ sub main {
         my $result = 0;
 
         my %alert_checks = (
-            'dependency-alerts' => sub { SecurityGate::Engine::Dependencies -> new($token, $repository, \%severity_limits) },
-            'secret-alerts'     => sub { SecurityGate::Engine::Secrets -> new($token, $repository, \%severity_limits) },
-            'code-alerts'       => sub { SecurityGate::Engine::Code -> new($token, $repository, \%severity_limits) }
+            'dependency-alerts' => $dependency_alerts ? sub { SecurityGate::Engine::Dependencies->new($token, $repository, \%severity_limits) } : undef,
+            'secret-alerts'     => $secret_alerts ? sub { SecurityGate::Engine::Secrets->new($token, $repository, \%severity_limits) } : undef,
+            'code-alerts'       => $code_alerts ? sub { SecurityGate::Engine::Code->new($token, $repository, \%severity_limits) } : undef
         );
 
-        for my $alert_type (keys %alert_checks) {
-            if ($alert_type eq 'dependency-alerts' && $dependency_alerts) {
-                $result += $alert_checks{$alert_type}->();
-            }
-
-            elsif ($alert_type eq 'secret-alerts' && $secret_alerts) {
-                $result += $alert_checks{$alert_type}->();
-            }
-
-            elsif ($alert_type eq 'code-alerts' && $code_alerts) {
-                $result += $alert_checks{$alert_type}->();
-            }
+        for my $check (grep { defined } values %alert_checks) {
+            $result += $check->();
         }
 
         return $result;
