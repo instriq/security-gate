@@ -50,6 +50,7 @@ BEGIN {
     }
 }
 
+no warnings 'once';
 *Mojo::UserAgent::new = \&MockMojoUserAgent::new;
 
 subtest 'Open secret scanning alerts exceeding limits' => sub {
