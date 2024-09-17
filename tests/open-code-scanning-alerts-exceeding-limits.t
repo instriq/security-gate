@@ -39,10 +39,10 @@ subtest 'Open code scanning alerts exceeding limits' => sub {
 
     my $mock_response = Mojo::UserAgent -> set_mock_response(Test::MockObject -> new);
     $mock_response -> set_always('code', 200);
-    $mock_response -> set_always('json', [
-        { state => 'open', rule => { severity => 'high' } },
-        { state => 'open', rule => { severity => 'high' } },
-        { state => 'open', rule => { severity => 'medium' } },
+    $mock_response->set_always('json', [
+        { state => 'open', rule => { security_severity_level => 'high' } },
+        { state => 'open', rule => { security_severity_level => 'high' } },
+        { state => 'open', rule => { security_severity_level => 'medium' } },
     ]);
 
     my %severity_limits = (
