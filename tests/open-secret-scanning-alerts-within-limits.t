@@ -50,6 +50,7 @@ BEGIN {
     }
 }
 
+no warnings 'once';
 *Mojo::UserAgent::new = \&MockMojoUserAgent::new;
 
 subtest 'Open secret scanning alerts within limits' => sub {
@@ -60,7 +61,7 @@ subtest 'Open secret scanning alerts within limits' => sub {
     ]);
 
     MockMojoUserAgent::setup_locations_response(200, [
-        { path => 'file1.txt', start_line => 10 },
+        { details => { path => 'file.txt', start_line => 10 } },
     ]);
 
     my %severity_limits = (
@@ -73,7 +74,7 @@ subtest 'Open secret scanning alerts within limits' => sub {
     my $result;
     my $expected_output_part1 = qr/\[!\]\ Total\ of\ open\ secret\ scanning\ alerts:\ 1/xsm;
     my $expected_output_part2 = qr/\[-\]\ Alert\ 1\ found\ in\ the\ following\ locations:/xsm;
-    my $expected_output_part3 = qr/File:\ file1\.txt,\ Start\ line:\ 10/xsm;
+    my $expected_output_part3 = qr/File:\ file\.txt,\ Start\ line:\ 10/xsm;
     my $expected_output_part4_part1 = qr/\[-\]\ Number\ of\ secret\ scanning\ alerts\ \(/xsm;
     my $expected_output_part4_part2 = qr/1\)\ is\ within\ the\ acceptable\ limit\ \(/xsm;
     my $expected_output_part4_part3 = qr/1\)\./xsm;
