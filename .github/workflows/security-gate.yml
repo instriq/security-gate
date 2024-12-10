@@ -40,5 +40,5 @@ jobs:
         -m "$MAX_MEDIUM" \
         -l "$MAX_LOW" \
         --dependency-alerts
-        --secrets-alerts
+        --secret-alerts
         --code-alerts
