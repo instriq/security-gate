@@ -30,7 +30,7 @@ jobs:
     - name: Pull Docker image from GitHub Container Registry
       run: docker pull ghcr.io/instriq/security-gate/security-gate:latest
 
-    - name: Verify security alerts from dependabot
+    - name: Verify security alerts from GHAS
       run: |
         docker run ghcr.io/instriq/security-gate/security-gate:latest \
         -t "$GITHUB_TOKEN" \
@@ -40,5 +40,5 @@ jobs:
         -m "$MAX_MEDIUM" \
         -l "$MAX_LOW" \
         --dependency-alerts \
-        --secret-alerts \ 
+        --secret-alerts \
         --code-alerts
