@@ -8,6 +8,9 @@
      <a href="https://github.com/instriq/security-gate/releases">
       <img src="https://img.shields.io/badge/version-0.1.0-blue.svg">
     </a>
+    <img src="https://github.com/instriq/security-gate/actions/workflows/linter.yml/badge.svg">
+    <img src="https://github.com/instriq/security-gate/actions/workflows/zarn.yml/badge.svg">
+    <img src="https://github.com/instriq/security-gate/actions/workflows/security-gate.yml/badge.svg">
   </p>
 </p>
 
