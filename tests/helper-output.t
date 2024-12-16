@@ -14,8 +14,8 @@ subtest 'Helper output' => sub {
     like($helper_output, qr/-t,\ --token/x, 'Helper output contains token option');
     like($helper_output, qr/-r,\ --repo/x, 'Helper output contains repo option');
     like($helper_output, qr/--dependency-alerts/x, 'Helper output contains dependency alerts option');
-    like($helper_output, qr/--secret-scanning-alerts/x, 'Helper output contains secret scanning alerts option');
-    like($helper_output, qr/--code-scanning-alerts/x, 'Helper output contains code scanning alerts option');
+    like($helper_output, qr/--secret-alerts/x, 'Helper output contains secret scanning alerts option');
+    like($helper_output, qr/--code-alerts/x, 'Helper output contains code scanning alerts option');
 };
 
 done_testing();
